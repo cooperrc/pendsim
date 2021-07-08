@@ -133,12 +133,13 @@ class LQR_GPR(Controller):
         scalar cost of control
     
     '''
-    def __init__(self, pend, dt, window, bwindow, Q, R):
+    def __init__(self, pend, dt, window, bwindow, Q, R, s=10):
         # LQR params
         self.window = window
         self.Q = np.diag(Q)
         self.R = np.atleast_2d(R)
         self.pend = pend
+        self.dt = dt
 
         # model params
         A = pend.jacA
@@ -150,10 +151,34 @@ class LQR_GPR(Controller):
         # GPR Params
         self.M = bwindow
         self.tick = 0
+        # priors for supervised learning problem (gpr)
+        self.priors_gp = []
+        # priors for calculating variance (kf)
         self.priors = []
+
+        # kf params
+        self.s = s
+        self.vw = 20
+        self.kf = self.create_ukf()
 
     @ignore_warnings(category=ConvergenceWarning)
     def policy(self, state, t, dt):
+        self.priors.append(state)        
+        l = max(self.tick - self.vw, 1)
+        u = self.tick
+        # do kalman filtering
+        if self.tick >= 2:
+            var = np.std(np.vstack(self.priors[l:u]), axis=0)
+        else:
+            var = np.asarray([0.4] * 4)
+        self.kf.Q = np.diag(var)
+        # Kalman filter predict
+        self.kf.predict()
+        # Kalman filter update
+        self.kf.update(np.array(state))
+
+        state = self.kf.x
+
         ### Wrap 
         x = copy.deepcopy(wrap_pi(state))
         ### Solve LQR
@@ -162,21 +187,28 @@ class LQR_GPR(Controller):
         else:
             action = self.swingup(state, 50)
 
+        action = 0
+
         if self.tick > 2:
             loweri = max(self.tick-self.M, 1)
             upperi = self.tick
-            xk1 = np.atleast_2d(self.priors)[loweri:upperi] # k-1 state
+            xk1 = np.atleast_2d(self.priors_gp)[loweri:upperi] # k-1 state
+
+            xk = np.vstack( (np.atleast_2d(self.priors_gp)[loweri+1:upperi,:4], state) )
             linearpred = np.dot(xk1[:,:4], self.A) + np.dot(np.atleast_2d(xk1[:,4]).T, self.B.T)
-            y = np.atleast_2d(state - linearpred).T[2,:] # M x n_d
+
+            y = np.atleast_2d(xk - linearpred)[:,2] # M x n_d
             z = np.atleast_2d(xk1) # M x n_z
             SC = preprocessing.StandardScaler()
             SC = SC.fit(z)
+    
             z_trans = SC.transform(z)
-            rq = gaussian_process.kernels.RBF(4.0, length_scale_bounds=(.5,50.0))
+            rq = gaussian_process.kernels.RBF(4.0, length_scale_bounds=(0.75,5))
             ck = gaussian_process.kernels.ConstantKernel(constant_value=1.0)
+            no = gaussian_process.kernels.WhiteKernel(noise_level=1, noise_level_bounds=(0.0001,1))
             gp = gaussian_process.GaussianProcessRegressor(
-                kernel=rq*ck,
-                n_restarts_optimizer=10,
+                kernel=rq*ck+ no,
+                n_restarts_optimizer=6,
                 alpha=1e-6
             )
             gp.fit(z_trans, y)
@@ -184,21 +216,40 @@ class LQR_GPR(Controller):
             indata_trans = SC.transform(indata)
             mu, sigma = gp.predict(indata_trans, return_std=True)
         else:
-            mu, sigma = 0.0,0.0
+            mu, sigma = 0.0,0.0000001
         
+
         lpred = np.dot(np.atleast_2d(state), self.A) + np.dot(self.B, action).T
         nlpred = np.squeeze(lpred[0,2]) + mu
+
+        mu = np.float64(np.squeeze(mu))
+        sigma = np.float64(np.squeeze(sigma))
+        lpred = np.float64(np.squeeze(lpred[0,2]))
+        nlpred = np.float64(np.squeeze(nlpred))
 
         data = {
             ('mu','t') : mu,
             ('sigma','t'): sigma,
-            ('lpred','t') : np.squeeze(lpred[0,2]),
-            ('nlpred','t') : nlpred
+            ('lpred','t') : lpred,
+            ('nlpred','t') : nlpred,
         }
+        labels = ['x', 'xd', 't', 'td']
+        data.update(array_to_kv('est', labels, state))
         # keep track of history
         self.tick += 1
-        self.priors.append(list(state) + [action])
+        self.priors_gp.append(list(state) + [action])
         return action, data
+
+    def create_ukf(self):
+        def fx(x, dt): return self.A.dot(x)
+        def hx(x): return x
+        points2 = sigma_points.SimplexSigmaPoints(4)
+        kf = UnscentedKalmanFilter(4, 4, self.dt, hx, fx, points2)
+        # initialize noise
+        kf.Q = np.diag([.2] * 4)
+        # initialize smoothing
+        kf.R = np.diag([self.s] * 4)
+        return kf
 
     def swingup(self, x,k):
         m, g, l = self.pend.m, self.pend.g, self.pend.l
