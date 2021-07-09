@@ -1,19 +1,14 @@
-from re import X
-from typing import KeysView
-from filterpy.common.discretization import Q_discrete_white_noise
-from filterpy.kalman.sigma_points import MerweScaledSigmaPoints
+from operator import length_hint
 import numpy as np
-import cvxpy as cp
-from numpy.lib.function_base import place
-from scipy.optimize import zeros
 from scipy.signal import cont2discrete
-from scipy.signal.ltisys import StateSpaceContinuous
 from pendulum.utils import array_to_kv, wrap_pi, sign
 import copy
 # necessary for GPR
 from sklearn import preprocessing, gaussian_process
 from sklearn.utils._testing import ignore_warnings
 from sklearn.exceptions import ConvergenceWarning
+import matplotlib.pyplot as plt
+from multiprocessing.pool import Pool
 
 
 np.set_printoptions(precision=5,suppress=True)
@@ -220,7 +215,7 @@ class LQR_GPR(Controller):
         
 
         lpred = np.dot(np.atleast_2d(state), self.A) + np.dot(self.B, action).T
-        nlpred = np.squeeze(lpred[0,2]) + mu
+        nlpred = np.squeeze(lpred[0,2]) - mu
 
         mu = np.float64(np.squeeze(mu))
         sigma = np.float64(np.squeeze(sigma))
@@ -261,6 +256,111 @@ class LQR_GPR(Controller):
 
 from filterpy.kalman.UKF import UnscentedKalmanFilter
 from filterpy.kalman import sigma_points
+
+class UKF_GP(Controller):
+    def __init__(self, pend, dt, window = 10, s=10, rbflength=20, testplot=False):
+        self.pend = pend
+        self.dt = dt
+        self.A, self.B = self._get_linear_sys(pend, dt)
+        self.s = s
+        self.window = window + 1
+        self.n = 0
+        self.testplot = testplot
+        self.rbflength = rbflength
+
+        self.priors, self.ts = [], []
+        def fx(x, dt, mu=0): 
+            xk1 = np.dot(self.A, x) - mu
+            return xk1
+        # standard UKF with no mu arg passed
+        self.ukf_control = self.create_ukf(fx)
+        self.ukf_gp = self.create_ukf(fx)
+
+    def get_gp_train(self, ts, priors):
+        l = max(self.n - self.window, 1)
+        u = self.n
+        # x_k
+        xk = np.array(priors[l+1:u])
+        # x_{k-1}
+        xk1 = np.array(priors[l:u-1])
+        xk1_pred = np.dot(self.A, xk.T)
+        y = xk1_pred.T - xk1
+        z = np.array(ts[l+1:u])
+        return z, y
+
+    def policy(self, state, t, dt):
+        self.priors.append(state)
+        self.ts.append(t)
+        if self.n >= 10:
+            # get training values
+            z, y = self.get_gp_train(self.ts, self.priors)
+            mu, sigma = np.empty((y.shape[1],)), np.empty((y.shape[1],))
+
+            #### PLOTTING
+            if self.testplot:
+                fig, ax = plt.subplots(ncols=2, nrows=2)
+                axi = {0:(0,0), 1:(0,1), 2:(1,0), 3:(1,1)}
+                lab = {0:'x',1:'xd',2:'t',3:'td'}
+
+            for i, yi in enumerate(y.T):
+                rbf = gaussian_process.kernels.RBF(dt*15, length_scale_bounds='fixed')
+                wk = gaussian_process.kernels.WhiteKernel(.2)
+                gp = gaussian_process.GaussianProcessRegressor(
+                    kernel = rbf + wk, 
+                    n_restarts_optimizer=8,
+                )
+                gp.fit(z.reshape(-1,1), yi.reshape(-1,1))
+                mu[i], sigma[i] = gp.predict(np.atleast_2d(t), return_std=True)
+
+                #### PLOTTING
+                if self.testplot:
+                    testz = np.linspace(z.min(), z.max(), 100)
+                    testmu, testsigma = gp.predict(testz.reshape(-1,1), return_std=True)
+                    testmu = testmu.squeeze()
+                    ax[axi[i]].scatter(z, yi, marker='.', c='#222222')
+                    ax[axi[i]].plot(testz, testmu, 'b-', label='GP Prediction')
+                    ax[axi[i]].fill_between(testz, testmu-testsigma, testmu+testsigma, alpha=0.1, color='b')
+            if self.testplot: plt.show()
+
+
+
+        else:
+            mu, sigma = np.zeros((4,)), np.zeros((4,))
+
+        self.ukf_control.predict(**{'mu': 0})
+        self.ukf_control.update(state)
+        est_control = self.ukf_control.x
+
+        self.ukf_gp.predict(**{'mu': mu})
+        self.ukf_gp.update(state, np.diag(sigma))
+        est_gp = self.ukf_gp.x
+
+        self.n += 1
+        # write data
+        data = {}
+        labels = ['x','xd','t','td']
+        data.update(array_to_kv('est_control', labels, est_control))
+        data.update(array_to_kv('est_gp',labels, est_gp))
+        return 0, data
+
+    def create_ukf(self, fx):
+        def hx(x): return x
+        points2 = sigma_points.SimplexSigmaPoints(4)
+        kf = UnscentedKalmanFilter(4, 4, self.dt, hx, fx, points2)
+        kf.Q = np.diag([.2] * 4)
+        kf.R = np.diag([self.s] * 4)
+        return kf
+
+
+    @staticmethod
+    def _get_linear_sys(pend, dt):
+        A, B = pend.jacA, pend.jacB
+        C, D = np.zeros((1, A.shape[0])), np.zeros((1, 1))
+        sys_disc = cont2discrete((A, B, C, D), dt, method='zoh')
+        return sys_disc[0], np.atleast_2d(sys_disc[1])
+
+
+
 
 class LQR_UKF(Controller):
     def __init__(self, pend, dt, window, Q, R, s=10, var_window=10):

@@ -162,4 +162,4 @@ class Visualizer(object):
             time_text.set_text(r"t="+str(round(self.data.index[i],3)))
             return retobjs
         
-        return FuncAnimation(fig, _animate, frames=n_frames, init_func=_init, blit=False, interval=interval)
+        return FuncAnimation(fig, _animate, frames=n_frames, init_func=_init, blit=True, interval=interval)
