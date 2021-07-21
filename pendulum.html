@@ -1,0 +1,502 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pendulum package &mdash; Pendulum Simulator 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="README" href="includeme.html" />
+    <link rel="prev" title="Welcome to Pendulum Simulator’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pendulum Simulator
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pendulum package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pendulum.controller">pendulum.controller module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pendulum-pendulum-module">pendulum.pendulum module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pendulum.sim">pendulum.sim module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pendulum-utils-module">pendulum.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pendulum.viz">pendulum.viz module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pendulum">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="includeme.html">README</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pendulum Simulator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>pendulum package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/pendulum.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pendulum-package">
+<h1>pendulum package<a class="headerlink" href="#pendulum-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pendulum.controller">
+<span id="pendulum-controller-module"></span><h2>pendulum.controller module<a class="headerlink" href="#module-pendulum.controller" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pendulum.controller.Controller">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pendulum.controller.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.Controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.controller.Controller.policy">
+<span class="sig-name descname"><span class="pre">policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.Controller.policy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pendulum.controller.LQR">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pendulum.controller.</span></span><span class="sig-name descname"><span class="pre">LQR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.LQR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pendulum.controller.Controller" title="pendulum.controller.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">pendulum.controller.Controller</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.controller.LQR.policy">
+<span class="sig-name descname"><span class="pre">policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.LQR.policy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pendulum.controller.PID">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pendulum.controller.</span></span><span class="sig-name descname"><span class="pre">PID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ki</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.PID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pendulum.controller.Controller" title="pendulum.controller.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">pendulum.controller.Controller</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.controller.PID.policy">
+<span class="sig-name descname"><span class="pre">policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.PID.policy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.controller.PID.wrapPi">
+<span class="sig-name descname"><span class="pre">wrapPi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.PID.wrapPi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.controller.do_lqr">
+<span class="sig-prename descclassname"><span class="pre">pendulum.controller.</span></span><span class="sig-name descname"><span class="pre">do_lqr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.do_lqr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.controller.get_linear_sys">
+<span class="sig-prename descclassname"><span class="pre">pendulum.controller.</span></span><span class="sig-name descname"><span class="pre">get_linear_sys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Adot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bdot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.get_linear_sys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.controller.quadform">
+<span class="sig-prename descclassname"><span class="pre">pendulum.controller.</span></span><span class="sig-name descname"><span class="pre">quadform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.controller.quadform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="pendulum-pendulum-module">
+<h2>pendulum.pendulum module<a class="headerlink" href="#pendulum-pendulum-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pendulum.sim">
+<span id="pendulum-sim-module"></span><h2>pendulum.sim module<a class="headerlink" href="#module-pendulum.sim" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pendulum.sim.Pendulum">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pendulum.sim.</span></span><span class="sig-name descname"><span class="pre">Pendulum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9.81</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pfric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0])</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Pendulum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Pendulum object</p>
+<p>Contains pendulum dynamical model and model parameters.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.sim.Pendulum.calculate_reaction_forces">
+<span class="sig-name descname"><span class="pre">calculate_reaction_forces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xdd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tdd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Pendulum.calculate_reaction_forces" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.sim.Pendulum.get_energy">
+<span class="sig-name descname"><span class="pre">get_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Pendulum.get_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return</p>
+<p>[extended_summary]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">np.array</span></code> of shape (4,)) – system state given by [x, xd, theta, thetad]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>kinetic energy, potential energy, total energy</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code> of (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.sim.Pendulum.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Pendulum.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>helper method for solve ivp</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>) – [description]</p></li>
+<li><p><strong>system_state</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">np.array</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>, shape (4,)) – system state given by:
+[x, xd, theta, thetad]</p></li>
+<li><p><strong>u</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>) – scalar force. Positive is -&gt;, negative is &lt;-
+u is assumed constant throughout the interval dt.</p></li>
+<li><p><strong>solve_args</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>, optional) – arguments passed to the solver. See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html</a> for
+more details</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the state at the end of dt and the force at the end of dt.
+note that force is held constant through the interval.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code> of (<code class="xref py py-obj docutils literal notranslate"><span class="pre">np.array</span></code> of shape (4,), <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.sim.Pendulum.system_dynamics">
+<span class="sig-name descname"><span class="pre">system_dynamics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Pendulum.system_dynamics" title="Permalink to this definition">¶</a></dt>
+<dd><p>governing equation for pendulum system dynamics, given by:</p>
+<p>y’ = f(t, y)</p>
+<p>See <a class="reference external" href="https://en.wikipedia.org/wiki/Inverted_pendulum">https://en.wikipedia.org/wiki/Inverted_pendulum</a> for details</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>) – unused in LTI model, but required by solve_ivp()</p></li>
+<li><p><strong>state</strong> (:obj:np.array of <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>, shape (5,)) – 5x1 system state with u tacked on at the end:
+[x, xd, theta, thetad, u]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>state</strong> – derivative of the state</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">np.array</span></code> of <cite>float</cite>, shape (5,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pendulum.sim.Simulation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pendulum.sim.</span></span><span class="sig-name descname"><span class="pre">Simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_final</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Simulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The simulation class includes methods for simulating a pendulum(s)
+with its controller(s), (and some methods for processing pendulum data)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.sim.Simulation.runsim">
+<span class="sig-name descname"><span class="pre">runsim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pend_cont_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Simulation.runsim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.sim.Simulation.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pendulum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Simulation.simulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate a pendulum/controller combination from t_0 to t_final.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pendulum</strong> (<em>:obj:Pendulum</em>) – pendulum object to simulate</p></li>
+<li><p><strong>controller</strong> (<em>:obj:Controller</em>) – controller object to simulate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The simulation data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>obj:pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.sim.Simulation.simulate_multiple">
+<span class="sig-name descname"><span class="pre">simulate_multiple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pendulums</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controllers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.Simulation.simulate_multiple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate many pendulum/controller combinations.</p>
+<p>If you are using random variables to populate pendulums/controllers,
+make sure that you deepcopy those objects, because some parameters may
+be shared internally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pendulums</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <a class="reference internal" href="#pendulum.sim.Pendulum" title="pendulum.sim.Pendulum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pendulum</span></code></a>) – the pendulums to simulate, in order</p></li>
+<li><p><strong>controllers</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Controller</span></code>) – the controllers to simulate, in order. Must be same
+length as pendulums.</p></li>
+<li><p><strong>parallel</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – whether to simulate in parallel, by default True. simulation
+is almost completely CPU bound so if you can use this, do.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>MultiIndex DataFrame of simulations. Simulations are stacked on axis 0,
+so axis=0 level=0 contains the run # and axis=0 level=1 contains individual
+simulation data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>obj:pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If pendulums/controllers are not equal length.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.sim.array_to_kv">
+<span class="sig-prename descclassname"><span class="pre">pendulum.sim.</span></span><span class="sig-name descname"><span class="pre">array_to_kv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level1_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level2_keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.array_to_kv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.sim.impulse_func">
+<span class="sig-prename descclassname"><span class="pre">pendulum.sim.</span></span><span class="sig-name descname"><span class="pre">impulse_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.impulse_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.sim.plot_input_func">
+<span class="sig-prename descclassname"><span class="pre">pendulum.sim.</span></span><span class="sig-name descname"><span class="pre">plot_input_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ifunc</span></em>, <em class="sig-param"><span class="pre">t_final</span></em>, <em class="sig-param"><span class="pre">plotobj=&lt;module</span> <span class="pre">'matplotlib.pyplot'</span> <span class="pre">from</span> <span class="pre">'/home/ms/.pyenv/versions/3.7.10/lib/python3.7/site-packages/matplotlib/pyplot.py'&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.plot_input_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.sim.sign">
+<span class="sig-prename descclassname"><span class="pre">pendulum.sim.</span></span><span class="sig-name descname"><span class="pre">sign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.sign" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.sim.sine_func">
+<span class="sig-prename descclassname"><span class="pre">pendulum.sim.</span></span><span class="sig-name descname"><span class="pre">sine_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.sine_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.sim.wrap_pi">
+<span class="sig-prename descclassname"><span class="pre">pendulum.sim.</span></span><span class="sig-name descname"><span class="pre">wrap_pi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.sim.wrap_pi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="pendulum-utils-module">
+<h2>pendulum.utils module<a class="headerlink" href="#pendulum-utils-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pendulum.viz">
+<span id="pendulum-viz-module"></span><h2>pendulum.viz module<a class="headerlink" href="#module-pendulum.viz" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pendulum.viz.Visualizer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pendulum.viz.</span></span><span class="sig-name descname"><span class="pre">Visualizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.viz.Visualizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.viz.Visualizer.animate">
+<span class="sig-name descname"><span class="pre">animate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pltdata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_fbd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.viz.Visualizer.animate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.viz.Visualizer.draw_cart_fbd">
+<span class="sig-name descname"><span class="pre">draw_cart_fbd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.viz.Visualizer.draw_cart_fbd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.viz.Visualizer.draw_force">
+<span class="sig-name descname"><span class="pre">draw_force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cart_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ydist</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.viz.Visualizer.draw_force" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pendulum.viz.Visualizer.draw_pend_fbd">
+<span class="sig-name descname"><span class="pre">draw_pend_fbd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.viz.Visualizer.draw_pend_fbd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pendulum.viz.sign">
+<span class="sig-prename descclassname"><span class="pre">pendulum.viz.</span></span><span class="sig-name descname"><span class="pre">sign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pendulum.viz.sign" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pendulum">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pendulum" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="includeme.html" class="btn btn-neutral float-right" title="README" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Pendulum Simulator’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Mike Sutherland.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
