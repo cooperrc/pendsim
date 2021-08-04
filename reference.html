@@ -1,0 +1,1190 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Reference &mdash; pendsim 1.0.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Install" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pendsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pendulum">Pendulum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-controllers">Basic Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-controllers">Advanced Controllers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pendsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/reference.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pendulum">
+<h2>Pendulum<a class="headerlink" href="#pendulum" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pendsim.sim.Pendulum">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.sim.</span></code><code class="sig-name descname"><span class="pre">Pendulum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">9.81</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfric</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pfric</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">array([0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0])</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/sim.html#Pendulum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.sim.Pendulum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for a pendulum object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>M</strong><span class="classifier">float</span></dt><dd><p>Cart weight, in kg</p>
+</dd>
+<dt><strong>m</strong><span class="classifier">float</span></dt><dd><p>Pendulum weight, in kg</p>
+</dd>
+<dt><strong>l</strong><span class="classifier">float</span></dt><dd><p>Length of pendulum, in m</p>
+</dd>
+<dt><strong>g</strong><span class="classifier">float, optional</span></dt><dd><p>Gravitational constant, in m/s^2, by default 9.81</p>
+</dd>
+<dt><strong>cfric</strong><span class="classifier">float, optional</span></dt><dd><p>Cart viscous friction coefficient, by default 0.1</p>
+</dd>
+<dt><strong>pfric</strong><span class="classifier">float, optional</span></dt><dd><p>Pendulum viscous friction coefficient, by default 0.05</p>
+</dd>
+<dt><strong>initial_state</strong><span class="classifier">np.ndarray, optional</span></dt><dd><p>Initial pendulum state, by default np.array([0, 0, 0, 0])</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>jacA</strong><span class="classifier">np.array</span></dt><dd><p>The jacobian of the state transition matrix A</p>
+</dd>
+<dt><strong>jacB</strong><span class="classifier">np.array</span></dt><dd><p>The jacobian of the control matrix B</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pendsim.sim.Pendulum.calculate_reaction_forces" title="pendsim.sim.Pendulum.calculate_reaction_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_reaction_forces</span></code></a>(state, xdd, tdd)</p></td>
+<td><p>Get reaction forces on each body (cart and pendulum).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pendsim.sim.Pendulum.get_energy" title="pendsim.sim.Pendulum.get_energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_energy</span></code></a>(state)</p></td>
+<td><p>Get energy of a state.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pendsim.sim.Pendulum.solve" title="pendsim.sim.Pendulum.solve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solve</span></code></a>(dt, system_state, u[, solve_args])</p></td>
+<td><p>Given a system state, solve the ivp over interval <a href="#id1"><span class="problematic" id="id2">`</span></a>d</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pendsim.sim.Pendulum.system_dynamics" title="pendsim.sim.Pendulum.system_dynamics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">system_dynamics</span></code></a>(t, state)</p></td>
+<td><p>Solve the system dynamics in the form xdot = Ax</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="pendsim.sim.Pendulum.calculate_reaction_forces">
+<code class="sig-name descname"><span class="pre">calculate_reaction_forces</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xdd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tdd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">tuple</span><a class="reference internal" href="_modules/pendsim/sim.html#Pendulum.calculate_reaction_forces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.sim.Pendulum.calculate_reaction_forces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get reaction forces on each body (cart and pendulum). This can be
+used to construct or visualize the forces that are applied to each body</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>state</strong><span class="classifier">np.ndarray</span></dt><dd><p>system state</p>
+</dd>
+<dt><strong>xdd</strong><span class="classifier">float</span></dt><dd><p>cart acceleration</p>
+</dd>
+<dt><strong>tdd</strong><span class="classifier">float</span></dt><dd><p>angular acceleration</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>tuple</dt><dd><p>(pend reaction force x-dir, pend reaction force y-dir, pend G force,
+cart reaction force x-dir, cart reaction force y-dir, cart G force,
+cart normal force)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.sim.Pendulum.get_energy">
+<code class="sig-name descname"><span class="pre">get_energy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/pendsim/sim.html#Pendulum.get_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.sim.Pendulum.get_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get energy of a state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>state</strong><span class="classifier">np.ndarray</span></dt><dd><p>system state</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[float, float, float]</dt><dd><p>tuple of (kinetic, potential, total) energies.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.sim.Pendulum.solve">
+<code class="sig-name descname"><span class="pre">solve</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solve_args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/pendsim/sim.html#Pendulum.solve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.sim.Pendulum.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a system state, solve the ivp over interval <a href="#id3"><span class="problematic" id="id4">`</span></a>d</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>Timestep over which to solve ivp</p>
+</dd>
+<dt><strong>system_state</strong><span class="classifier">np.ndarray</span></dt><dd><p>the 4-tuple system state [x, xdot, theta, thetadot]</p>
+</dd>
+<dt><strong>u</strong><span class="classifier">float</span></dt><dd><p>external force applied to base</p>
+</dd>
+<dt><strong>solve_args</strong><span class="classifier">dict, optional</span></dt><dd><p>arguments supplied to the solver, by default {}</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[np.ndarray, float]</dt><dd><p>tuple of (4-tuple system state, external force)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.sim.Pendulum.system_dynamics">
+<code class="sig-name descname"><span class="pre">system_dynamics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="_modules/pendsim/sim.html#Pendulum.system_dynamics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.sim.Pendulum.system_dynamics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve the system dynamics in the form xdot = Ax</p>
+<p>Because this function is called by <cite>solve_ivp</cite>, we package the control
+input <cite>u</cite> with the state; i.e. the state vector is [x, xdot, theta, thetadot, u]</p>
+<p>input <cite>t</cite> is unused, because the pendulum is modeled as an LTI system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>t</strong><span class="classifier">float</span></dt><dd><p>time</p>
+</dd>
+<dt><strong>state</strong><span class="classifier">np.ndarray</span></dt><dd><p>state, including cart force <cite>u</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>np.ndarray</dt><dd><p>x dot</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pendsim.sim.Simulation">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.sim.</span></code><code class="sig-name descname"><span class="pre">Simulation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_final</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_scale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/sim.html#Simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.sim.Simulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulation object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>simulation timestep in seconds</p>
+</dd>
+<dt><strong>t_final</strong><span class="classifier">float</span></dt><dd><p>final simulation time in seconds (simulation happens over the interval [0, t_final])</p>
+</dd>
+<dt><strong>force</strong><span class="classifier">callable</span></dt><dd><p>a time-dependent forcing function. Must be in the form <cite>f(t) = u</cite> where t is the
+supplied time and u is the corresponding force applied to the cart.</p>
+</dd>
+<dt><strong>noise_scale</strong><span class="classifier">np.ndarray, optional</span></dt><dd><p>scale of gaussian noise to add to the system state. Is a 4-tuple where each value corresponds
+to the variance of the noise added to each state value, by default None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pendsim.sim.Simulation.simulate" title="pendsim.sim.Simulation.simulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">simulate</span></code></a>(pendulum, controller)</p></td>
+<td><p>Simulate the system with the parameters stored in the <cite>Simulation</cite> object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pendsim.sim.Simulation.simulate_multiple" title="pendsim.sim.Simulation.simulate_multiple"><code class="xref py py-obj docutils literal notranslate"><span class="pre">simulate_multiple</span></code></a>(pendulums, controllers[, …])</p></td>
+<td><p>Simulate pendulums and controllers in a list.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>runsim</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="pendsim.sim.Simulation.simulate">
+<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pendulum</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pendsim.sim.Pendulum" title="pendsim.sim.Pendulum"><span class="pre">pendsim.sim.Pendulum</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="reference internal" href="_modules/pendsim/sim.html#Simulation.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.sim.Simulation.simulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate the system with the parameters stored in the <cite>Simulation</cite> object.</p>
+<p>User supplies a pendulum and a controller, so that the same simulation conditions
+(timestep, noise, external force, etc) can be tested against multiple pendulums and
+controllers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pendulum</strong><span class="classifier">Pendulum</span></dt><dd><p>Pendulum object under simulation</p>
+</dd>
+<dt><strong>controller</strong><span class="classifier">[type]</span></dt><dd><p>Controller to run over the simulation</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>The results of the simulation. Calling e.g. results.columns will show all fields
+recorded during the simulation. This is a 2-level Multi-Index dataframe.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.sim.Simulation.simulate_multiple">
+<code class="sig-name descname"><span class="pre">simulate_multiple</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pendulums</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controllers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/sim.html#Simulation.simulate_multiple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.sim.Simulation.simulate_multiple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate pendulums and controllers in a list. This method sees significant speedup
+in parallelization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pendulums</strong><span class="classifier">list</span></dt><dd><p>List of pendulums to simulate</p>
+</dd>
+<dt><strong>controllers</strong><span class="classifier">list</span></dt><dd><p>List of controllers to simulate</p>
+</dd>
+<dt><strong>parallel</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to simulate in parallel across multiple cores, by default True</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>Dataframe of results. This dataframe basically stacks each run in a multi-index,
+where the level0 indices are the multiple runs of the simulation and the level1 indices
+are the timesteps of each run.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>pendulums and controllers must be 1:1, i.e. each pendulum must be supplied with a
+controller, even if controllers or pendulums used across runs are the same.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pendsim.viz.Visualizer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.viz.</span></code><code class="sig-name descname"><span class="pre">Visualizer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/viz.html#Visualizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.viz.Visualizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The visualizer object stores parameters and methods for generating an
+animation of a particular run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data</strong><span class="classifier">pd.DataFrame</span></dt><dd><p>Dataframe containing simulation data</p>
+</dd>
+<dt><strong>pend</strong><span class="classifier">pendsim.sim.Pendulum</span></dt><dd><p>Pendulum object to visualize. The animation scales with the length and masses
+of the pendulum object. To generate an accurate visualization, just pass the same
+pendulum that was simulated.</p>
+</dd>
+<dt><strong>speed</strong><span class="classifier">int, optional</span></dt><dd><p>The number of frames to “skip” in the animation. Real-time animation is rather
+difficult with matplotlib, because the draw speed of the animator varies between
+systems. So if your simulation timestep is very small, the animation can run quite
+slowly.      by default 2</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pendsim.viz.Visualizer.draw_force" title="pendsim.viz.Visualizer.draw_force"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_force</span></code></a>(obj, u, cart_x, ydist)</p></td>
+<td><p>Draw the external force on the cart.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>animate</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>draw_cart_fbd</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>draw_pend_fbd</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="pendsim.viz.Visualizer.draw_force">
+<code class="sig-name descname"><span class="pre">draw_force</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cart_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ydist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/viz.html#Visualizer.draw_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.viz.Visualizer.draw_force" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw the external force on the cart.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">matplotlib FancyArrow object</span></dt><dd><p>The force line object</p>
+</dd>
+<dt><strong>u</strong><span class="classifier">float</span></dt><dd><p>magnitude of force to represent</p>
+</dd>
+<dt><strong>cart_x</strong><span class="classifier">float</span></dt><dd><p>cart position</p>
+</dd>
+<dt><strong>ydist</strong><span class="classifier">float</span></dt><dd><p>distance vertically “up” the cart to draw the force. i.e. 0 draws
+the force at the very bottom of the cart along the ground, 1.0 draws
+the force at the very top of the cart</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="basic-controllers">
+<h2>Basic Controllers<a class="headerlink" href="#basic-controllers" title="Permalink to this headline">¶</a></h2>
+<p>Controller Implementations are stored in <cite>controller.py</cite>. The base class for all controller implementations is <cite>Controller</cite>.</p>
+<dl class="py class">
+<dt id="pendsim.controller.Controller">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.controller.</span></code><code class="sig-name descname"><span class="pre">Controller</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/controller.html#Controller"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for controllers. A controller executes a <cite>policy</cite> during
+the simulation loop. It takes some measured <cite>state</cite> and takes some
+<cite>action</cite> on that state. The <cite>action</cite> is a force applied to the base
+of the cart.</p>
+<p>A controller’s <cite>policy</cite> can include a state estimator or functions
+we can use to record data.</p>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>policy:</strong></p></td>
+<td><p>control policy</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>do_swingup:</strong></p></td>
+<td><p>get action from Astrom’s “swing-up” policy</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>do_lqr:</strong></p></td>
+<td><p>get action from an LQR policy</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>get_linear_sys:</strong></p></td>
+<td><p>get the linearized system from jacobians</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>store_4tuple:</strong></p></td>
+<td><p>store a 4-tuple into multi-index</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>wrapPi:</strong></p></td>
+<td><p>wrap an angular value to [-pi, pi] interval</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>create_ukf:</strong></p></td>
+<td><p>create an unscented kalman filter for the system</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>do_pid:</strong></p></td>
+<td><p>get action from a PID control policy</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>get_and_store_priors:</strong></p></td>
+<td><p>utility function for storing state priors in a moving backwards horizon</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="pendsim.controller.Controller.create_ukf">
+<code class="sig-name descname"><span class="pre">create_ukf</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">callable</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">filterpy.kalman.UKF.UnscentedKalmanFilter</span><a class="reference internal" href="_modules/pendsim/controller.html#Controller.create_ukf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller.create_ukf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an unscented Kalman filter with state transition functions
+<cite>fx</cite>, measurement function <cite>hx</cite> with timestep between measurements
+estimated as <cite>dt</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>control timestep</p>
+</dd>
+<dt><strong>hx</strong><span class="classifier">callable</span></dt><dd><p>function describing mapping between sensor inputs and measurements</p>
+</dd>
+<dt><strong>fx</strong><span class="classifier">callable</span></dt><dd><p>function describing system. Can be non-linear.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>UnscentedKalmanFilter</dt><dd><p>UKF object with sensible defaults for sigma points.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.controller.Controller.do_lqr">
+<code class="sig-name descname"><span class="pre">do_lqr</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="_modules/pendsim/controller.html#Controller.do_lqr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller.do_lqr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finite-horizon discrete Linear Quadratic Regulator policy.
+An LQR controller produces an optimal control policy over a finite horizon
+according to a quadratic cost over the system state.</p>
+<p>See <a class="reference external" href="https://underactuated.mit.edu/lqr.html">https://underactuated.mit.edu/lqr.html</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>w</strong><span class="classifier">int</span></dt><dd><p>window over which to perform LQR control</p>
+</dd>
+<dt><strong>A</strong><span class="classifier">np.ndarray</span></dt><dd><p>linear plant transition matrix</p>
+</dd>
+<dt><strong>B</strong><span class="classifier">np.ndarray</span></dt><dd><p>linear control matrix</p>
+</dd>
+<dt><strong>Q</strong><span class="classifier">np.ndarray</span></dt><dd><p>controller gain matrix</p>
+</dd>
+<dt><strong>R</strong><span class="classifier">np.ndarray</span></dt><dd><p>control action penalty</p>
+</dd>
+<dt><strong>x</strong><span class="classifier">np.ndarray</span></dt><dd><p>system state</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>np.ndarray</dt><dd><p>sequence of control actions</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.controller.Controller.do_pid">
+<code class="sig-name descname"><span class="pre">do_pid</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ki</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.array</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="_modules/pendsim/controller.html#Controller.do_pid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller.do_pid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform PID (proportional-integral-derivative) control policy given
+a system state. This policy executes on the pendulum angle (i.e. attempts)
+to keep the pendulum in the upright position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>control timestep</p>
+</dd>
+<dt><strong>kp</strong><span class="classifier">float</span></dt><dd><p>proportional gain</p>
+</dd>
+<dt><strong>ki</strong><span class="classifier">float</span></dt><dd><p>integral gain</p>
+</dd>
+<dt><strong>kd</strong><span class="classifier">float</span></dt><dd><p>derivative gain</p>
+</dd>
+<dt><strong>state</strong><span class="classifier">np.array</span></dt><dd><p>input state</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>control action</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.controller.Controller.do_swingup">
+<code class="sig-name descname"><span class="pre">do_swingup</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pend</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pendsim.sim.Pendulum" title="pendsim.sim.Pendulum"><span class="pre">pendsim.sim.Pendulum</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="_modules/pendsim/controller.html#Controller.do_swingup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller.do_swingup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement a swing-up by Energy control method described by Astrom
+and Furuta. Typically, we want to implement the swing-up strategy if
+the pendulum is below some threshold (i.e. theta &gt; pi/2).</p>
+<p>See</p>
+<p>Åström, Karl Johan, and Katsuhisa Furuta. “Swinging up a pendulum by
+energy control.” Automatica 36.2 (2000): 287-295.
+at <a class="reference external" href="https://doi.org/10.1016/S1474-6670(17)57951-3">https://doi.org/10.1016/S1474-6670(17)57951-3</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pend</strong><span class="classifier">pendsim.sim.Pendulum</span></dt><dd><p>The pendulum object containing <cite>m</cite>,`g`,`l` parameters we use to
+estimate the energy of the system.</p>
+</dd>
+<dt><strong>state</strong><span class="classifier">np.ndarray</span></dt><dd><p>The current state</p>
+</dd>
+<dt><strong>k</strong><span class="classifier">float</span></dt><dd><p>Swing-up gain</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>controller action.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.controller.Controller.get_and_store_priors">
+<code class="sig-name descname"><span class="pre">get_and_store_priors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/pendsim/controller.html#Controller.get_and_store_priors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller.get_and_store_priors" title="Permalink to this definition">¶</a></dt>
+<dd><p>utility function for getting and storing priors in some window <cite>n</cite>.
+This function returns two values <cite>l</cite> and <cite>u</cite> which provide the indices
+to a moving window over prior_states. You must include an attr <cite>tick</cite>,
+which is incremented to determine the window, as well as an attr <cite>prior_states</cite>
+to store states to use this function, and this function alters those attrs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>state</strong><span class="classifier">np.ndarray</span></dt><dd><p>input state to store</p>
+</dd>
+<dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>window for returning <cite>l</cite>, <cite>u</cite> pair.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[int, int]</dt><dd><p>l, u pair. If you want to get n most recent prior measurements, call
+self.prior_states[l:u]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.controller.Controller.get_linear_sys">
+<code class="sig-name descname"><span class="pre">get_linear_sys</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Adot</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Bdot</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/pendsim/controller.html#Controller.get_linear_sys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller.get_linear_sys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get linearize from jacobians of system with timestep <cite>dt</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>Adot</strong><span class="classifier">np.ndarray</span></dt><dd><p>The (4,4) jacobian of the plant matrix A</p>
+</dd>
+<dt><strong>Bdot</strong><span class="classifier">np.ndarray</span></dt><dd><p>The (4,1) jacobian of the control matrix B</p>
+</dd>
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>control timestep</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[np.ndarray, np.ndarray]</dt><dd><p>linearized system matrices A, B.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.controller.Controller.store_4tuple">
+<code class="sig-name descname"><span class="pre">store_4tuple</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level1_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="reference internal" href="_modules/pendsim/controller.html#Controller.store_4tuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller.store_4tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function for storing a 4-tuple of values. A level 0 key
+is given, and the level 1 keys are populated with ‘x’, ‘xd’, ‘t’,’td’
+values. Use this when you need to easily return data from a 4-tuple
+produced by the simulation that maps to each of the 4 state values.</p>
+<p>Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">val</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;count&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">store4tuple</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+<span class="go">{</span>
+<span class="go">    (&#39;count&#39;,&#39;x&#39;) : 1,</span>
+<span class="go">    (&#39;count&#39;,&#39;xd&#39;) : 2,</span>
+<span class="go">    (&#39;count&#39;,&#39;t&#39;) : 3,</span>
+<span class="go">    (&#39;count&#39;,&#39;td&#39;) : 4,</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>level1_key</strong><span class="classifier">str</span></dt><dd><p>outer key</p>
+</dd>
+<dt><strong>val</strong><span class="classifier">np.ndarray</span></dt><dd><p>values. Must be shape (4,1) or (4,)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>dict containing new data values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pendsim.controller.Controller.wrapPi">
+<code class="sig-name descname"><span class="pre">wrapPi</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="_modules/pendsim/controller.html#Controller.wrapPi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.Controller.wrapPi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap an angle to the interval between [-pi, pi].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>val</strong><span class="classifier">float</span></dt><dd><p>angle</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>wrapped angle</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pendsim.controller.NoController">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.controller.</span></code><code class="sig-name descname"><span class="pre">NoController</span></code><a class="reference internal" href="_modules/pendsim/controller.html#NoController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.NoController" title="Permalink to this definition">¶</a></dt>
+<dd><p>“No Controller” controller. This guy does nothing, 0 action, at
+every timestep.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_ukf</span></code>(dt, hx, fx)</p></td>
+<td><p>Create an unscented Kalman filter with state transition functions <cite>fx</cite>, measurement function <cite>hx</cite> with timestep between measurements estimated as <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_lqr</span></code>(w, A, B, Q, R, x)</p></td>
+<td><p>Finite-horizon discrete Linear Quadratic Regulator policy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pid</span></code>(dt, kp, ki, kd, state)</p></td>
+<td><p>Perform PID (proportional-integral-derivative) control policy given a system state.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_swingup</span></code>(pend, state, k)</p></td>
+<td><p>Implement a swing-up by Energy control method described by Astrom and Furuta.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_and_store_priors</span></code>(state, n)</p></td>
+<td><p>utility function for getting and storing priors in some window <cite>n</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_linear_sys</span></code>(Adot, Bdot, dt)</p></td>
+<td><p>Get linearize from jacobians of system with timestep <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">store_4tuple</span></code>(level1_key, val)</p></td>
+<td><p>Helper function for storing a 4-tuple of values.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrapPi</span></code>(val)</p></td>
+<td><p>Wrap an angle to the interval between [-pi, pi].</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>policy</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt id="pendsim.controller.BangBang">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.controller.</span></code><code class="sig-name descname"><span class="pre">BangBang</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">magnitude</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setpoint</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.7853981633974483</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/controller.html#BangBang"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.BangBang" title="Permalink to this definition">¶</a></dt>
+<dd><p>BangBang control strategy. If the pendulum is within a threshold given
+by <cite>threshold</cite>, push as hard as possible to get it to vertical. When it
+passes over <cite>theta</cite>, push the other way.</p>
+<p>This is what your air conditioner uses and it’s probably not ideal for the
+fast dynamics at hand here.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>magnitude</strong><span class="classifier">float</span></dt><dd><p>magnitude of the push.</p>
+</dd>
+<dt><strong>setpoint</strong><span class="classifier">float, optional</span></dt><dd><p>setpoint around which to push. 0 by default</p>
+</dd>
+<dt><strong>threshold</strong><span class="classifier">float, optional</span></dt><dd><p>threshold; if the pendulum falls above the threshold (i.e. if it falls over)
+this prevents the controller from taking continous action. By default np.pi/4</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_ukf</span></code>(dt, hx, fx)</p></td>
+<td><p>Create an unscented Kalman filter with state transition functions <cite>fx</cite>, measurement function <cite>hx</cite> with timestep between measurements estimated as <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_lqr</span></code>(w, A, B, Q, R, x)</p></td>
+<td><p>Finite-horizon discrete Linear Quadratic Regulator policy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pid</span></code>(dt, kp, ki, kd, state)</p></td>
+<td><p>Perform PID (proportional-integral-derivative) control policy given a system state.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_swingup</span></code>(pend, state, k)</p></td>
+<td><p>Implement a swing-up by Energy control method described by Astrom and Furuta.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_and_store_priors</span></code>(state, n)</p></td>
+<td><p>utility function for getting and storing priors in some window <cite>n</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_linear_sys</span></code>(Adot, Bdot, dt)</p></td>
+<td><p>Get linearize from jacobians of system with timestep <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">store_4tuple</span></code>(level1_key, val)</p></td>
+<td><p>Helper function for storing a 4-tuple of values.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrapPi</span></code>(val)</p></td>
+<td><p>Wrap an angle to the interval between [-pi, pi].</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>policy</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt id="pendsim.controller.LQR">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.controller.</span></code><code class="sig-name descname"><span class="pre">LQR</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pend</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pendsim.sim.Pendulum" title="pendsim.sim.Pendulum"><span class="pre">pendsim.sim.Pendulum</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/controller.html#LQR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.LQR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform an LQR strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pend</strong><span class="classifier">pendsim.sim.Pendulum</span></dt><dd><p>The pendulum we want to control</p>
+</dd>
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>Timestep of the simulation</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">int</span></dt><dd><p>the window over which to perform LQR. For example; <cite>window=5</cite> will
+optimize over 5 timesteps</p>
+</dd>
+<dt><strong>Q</strong><span class="classifier">np.ndarray</span></dt><dd><p>State cost array</p>
+</dd>
+<dt><strong>R</strong><span class="classifier">np.ndarray</span></dt><dd><p>Actuation cost array</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_ukf</span></code>(dt, hx, fx)</p></td>
+<td><p>Create an unscented Kalman filter with state transition functions <cite>fx</cite>, measurement function <cite>hx</cite> with timestep between measurements estimated as <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_lqr</span></code>(w, A, B, Q, R, x)</p></td>
+<td><p>Finite-horizon discrete Linear Quadratic Regulator policy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pid</span></code>(dt, kp, ki, kd, state)</p></td>
+<td><p>Perform PID (proportional-integral-derivative) control policy given a system state.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_swingup</span></code>(pend, state, k)</p></td>
+<td><p>Implement a swing-up by Energy control method described by Astrom and Furuta.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_and_store_priors</span></code>(state, n)</p></td>
+<td><p>utility function for getting and storing priors in some window <cite>n</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_linear_sys</span></code>(Adot, Bdot, dt)</p></td>
+<td><p>Get linearize from jacobians of system with timestep <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">store_4tuple</span></code>(level1_key, val)</p></td>
+<td><p>Helper function for storing a 4-tuple of values.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrapPi</span></code>(val)</p></td>
+<td><p>Wrap an angle to the interval between [-pi, pi].</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>policy</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="advanced-controllers">
+<h2>Advanced Controllers<a class="headerlink" href="#advanced-controllers" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pendsim.controller.LQR_UKF">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.controller.</span></code><code class="sig-name descname"><span class="pre">LQR_UKF</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lqrw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_t</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/controller.html#LQR_UKF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.LQR_UKF" title="Permalink to this definition">¶</a></dt>
+<dd><p>LQR controller with unscented kalman filter state estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>qr</strong><span class="classifier">Tuple[np.ndarray, float]</span></dt><dd><p>tuple of (Q, R) matrices. In this case R is a 1x1 matrix or float.</p>
+</dd>
+<dt><strong>lqrw</strong><span class="classifier">int</span></dt><dd><p>the window over which to perform LQR. Longer windows are more accurate,
+because they take into account a longer approximation of the system
+response. However, they take more time to compute and can be numerically
+unstable.</p>
+</dd>
+<dt><strong>pend</strong><span class="classifier">pendsim.sim.Pendulum</span></dt><dd><p>pendulum object with jacobians of A and B matrices.</p>
+</dd>
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>control timestep</p>
+</dd>
+<dt><strong>var_t</strong><span class="classifier">float</span></dt><dd><p>window over which to collect variances, in units of seconds.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_ukf</span></code>(dt, hx, fx)</p></td>
+<td><p>Create an unscented Kalman filter with state transition functions <cite>fx</cite>, measurement function <cite>hx</cite> with timestep between measurements estimated as <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_lqr</span></code>(w, A, B, Q, R, x)</p></td>
+<td><p>Finite-horizon discrete Linear Quadratic Regulator policy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pid</span></code>(dt, kp, ki, kd, state)</p></td>
+<td><p>Perform PID (proportional-integral-derivative) control policy given a system state.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_swingup</span></code>(pend, state, k)</p></td>
+<td><p>Implement a swing-up by Energy control method described by Astrom and Furuta.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_and_store_priors</span></code>(state, n)</p></td>
+<td><p>utility function for getting and storing priors in some window <cite>n</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_linear_sys</span></code>(Adot, Bdot, dt)</p></td>
+<td><p>Get linearize from jacobians of system with timestep <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">store_4tuple</span></code>(level1_key, val)</p></td>
+<td><p>Helper function for storing a 4-tuple of values.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrapPi</span></code>(val)</p></td>
+<td><p>Wrap an angle to the interval between [-pi, pi].</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>policy</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py class">
+<dt id="pendsim.controller.PID_UKF">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pendsim.controller.</span></code><code class="sig-name descname"><span class="pre">PID_UKF</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_t</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pendsim/controller.html#PID_UKF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.PID_UKF" title="Permalink to this definition">¶</a></dt>
+<dd><p>PID controller with unscented kalman filter. The unscented kalman filter
+uses variance on the scale of <cite>var_t</cite> to get the measurement noise estimate.
+(<cite>var_t</cite> is a measurement of time in seconds.)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>pid</strong><span class="classifier">Tuple[float, float, float]</span></dt><dd><p>kp, ki, kd gains for the controller</p>
+</dd>
+<dt><strong>pend</strong><span class="classifier">[type]</span></dt><dd><p>object containing the pendulum under control.</p>
+</dd>
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>control timestep</p>
+</dd>
+<dt><strong>var_t</strong><span class="classifier">float</span></dt><dd><p>window over which to collect the measurement</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_ukf</span></code>(dt, hx, fx)</p></td>
+<td><p>Create an unscented Kalman filter with state transition functions <cite>fx</cite>, measurement function <cite>hx</cite> with timestep between measurements estimated as <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_lqr</span></code>(w, A, B, Q, R, x)</p></td>
+<td><p>Finite-horizon discrete Linear Quadratic Regulator policy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_pid</span></code>(dt, kp, ki, kd, state)</p></td>
+<td><p>Perform PID (proportional-integral-derivative) control policy given a system state.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">do_swingup</span></code>(pend, state, k)</p></td>
+<td><p>Implement a swing-up by Energy control method described by Astrom and Furuta.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_and_store_priors</span></code>(state, n)</p></td>
+<td><p>utility function for getting and storing priors in some window <cite>n</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_linear_sys</span></code>(Adot, Bdot, dt)</p></td>
+<td><p>Get linearize from jacobians of system with timestep <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pendsim.controller.PID_UKF.policy" title="pendsim.controller.PID_UKF.policy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">policy</span></code></a>(state, dt)</p></td>
+<td><p>Measure variance from prior states over <cite>var_t</cite>, then use that variance to compute an estimated state with an unscented kalman filter.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">store_4tuple</span></code>(level1_key, val)</p></td>
+<td><p>Helper function for storing a 4-tuple of values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrapPi</span></code>(val)</p></td>
+<td><p>Wrap an angle to the interval between [-pi, pi].</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="pendsim.controller.PID_UKF.policy">
+<code class="sig-name descname"><span class="pre">policy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/pendsim/controller.html#PID_UKF.policy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pendsim.controller.PID_UKF.policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measure variance from prior states over <cite>var_t</cite>, then use that variance
+to compute an estimated state with an unscented kalman filter. The measured
+state is then used for the PID control policy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>state</strong><span class="classifier">np.ndarray</span></dt><dd><p>system state</p>
+</dd>
+<dt><strong>dt</strong><span class="classifier">float</span></dt><dd><p>timestep</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Tuple[float, dict]</dt><dd><p>action, data pair</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="install.html" class="btn btn-neutral float-left" title="Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Mike Sutherland.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

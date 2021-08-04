@@ -1,0 +1,579 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pendsim.viz &mdash; pendsim 1.0.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pendsim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pendsim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pendsim.viz</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pendsim.viz</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">CO_GENERATOR</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">patches</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">lines</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="Visualizer"><a class="viewcode-back" href="../../reference.html#pendsim.viz.Visualizer">[docs]</a><span class="k">class</span> <span class="nc">Visualizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The visualizer object stores parameters and methods for generating an</span>
+<span class="sd">    animation of a particular run.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : pd.DataFrame</span>
+<span class="sd">        Dataframe containing simulation data</span>
+<span class="sd">    pend : pendsim.sim.Pendulum</span>
+<span class="sd">        Pendulum object to visualize. The animation scales with the length and masses</span>
+<span class="sd">        of the pendulum object. To generate an accurate visualization, just pass the same</span>
+<span class="sd">        pendulum that was simulated.</span>
+<span class="sd">    speed : int, optional</span>
+<span class="sd">        The number of frames to &quot;skip&quot; in the animation. Real-time animation is rather</span>
+<span class="sd">        difficult with matplotlib, because the draw speed of the animator varies between</span>
+<span class="sd">        systems. So if your simulation timestep is very small, the animation can run quite</span>
+<span class="sd">        slowly.      by default 2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pend</span><span class="p">,</span> <span class="n">speed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span> <span class="n">pend</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cart_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">M</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">M</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+        <span class="c1"># Pendulum Params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="mi">3</span>
+        <span class="c1"># Display Params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ymax</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ymin</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="mf">1.3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f_width</span> <span class="o">=</span> <span class="mf">0.02</span>
+
+    <span class="k">def</span> <span class="nf">_draw_cart</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">cart</span><span class="p">:</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">,</span>
+        <span class="n">mass</span><span class="p">:</span> <span class="n">patches</span><span class="o">.</span><span class="n">Circle</span><span class="p">,</span>
+        <span class="n">line</span><span class="p">:</span> <span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">,</span>
+        <span class="n">xi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">thetai</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw cart on `cart`, `mass`, and `line` objects with cart position xi and</span>
+<span class="sd">        pendulum position thetai.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># adjust height when rendering</span>
+        <span class="n">cart</span><span class="o">.</span><span class="n">set_xy</span><span class="p">((</span><span class="n">xi</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_w</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">))</span>
+        <span class="c1"># mass xy</span>
+        <span class="n">massx</span> <span class="o">=</span> <span class="n">xi</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">thetai</span><span class="p">)</span>
+        <span class="n">massy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">thetai</span><span class="p">)</span>
+        <span class="n">mass</span><span class="o">.</span><span class="n">set_center</span><span class="p">((</span><span class="n">massx</span><span class="p">,</span> <span class="n">massy</span><span class="p">))</span>
+        <span class="c1"># line</span>
+        <span class="n">linexy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">massx</span><span class="p">,</span> <span class="n">xi</span><span class="p">],</span> <span class="p">[</span><span class="n">massy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">]])</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">linexy</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_draw_objs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lc</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create objects to draw</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lc : str, optional</span>
+<span class="sd">            matplotlib Line color, by default &quot;black&quot;</span>
+<span class="sd">        ls : str, optional</span>
+<span class="sd">            matplotlib Line style, by default &quot;-&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[patches.Rectangle, patches.Circle, patches.Line2D]</span>
+<span class="sd">            Tuple of the cart, pendulum, and connecting line objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cart</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
+            <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cart_w</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">),</span>
+            <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cart_w</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=-</span><span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">,</span>
+            <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+            <span class="n">ec</span><span class="o">=</span><span class="n">lc</span><span class="p">,</span>
+            <span class="n">ls</span><span class="o">=</span><span class="n">ls</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># The pendulum mass</span>
+        <span class="n">mass</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p_rad</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="n">lc</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ls</span><span class="p">)</span>
+        <span class="c1"># The line connecting cart to pend mass</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">(</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cart</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">line</span>
+
+<div class="viewcode-block" id="Visualizer.draw_force"><a class="viewcode-back" href="../../reference.html#pendsim.viz.Visualizer.draw_force">[docs]</a>    <span class="k">def</span> <span class="nf">draw_force</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">cart_x</span><span class="p">,</span> <span class="n">ydist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Draw the external force on the cart.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obj : matplotlib FancyArrow object</span>
+<span class="sd">            The force line object</span>
+<span class="sd">        u : float</span>
+<span class="sd">            magnitude of force to represent</span>
+<span class="sd">        cart_x : float</span>
+<span class="sd">            cart position</span>
+<span class="sd">        ydist : float</span>
+<span class="sd">            distance vertically &quot;up&quot; the cart to draw the force. i.e. 0 draws</span>
+<span class="sd">            the force at the very bottom of the cart along the ground, 1.0 draws</span>
+<span class="sd">            the force at the very top of the cart</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">u</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">beg</span> <span class="o">=</span> <span class="p">(</span><span class="n">cart_x</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_w</span><span class="p">,</span> <span class="n">ydist</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">cart_x</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_w</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)),</span>
+                <span class="n">ydist</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_xy</span><span class="p">((</span><span class="n">beg</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">u</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">beg</span> <span class="o">=</span> <span class="p">(</span><span class="n">cart_x</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_w</span><span class="p">,</span> <span class="n">ydist</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">cart_x</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_w</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)),</span>
+                <span class="n">ydist</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_xy</span><span class="p">((</span><span class="n">beg</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_xy</span><span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">animate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">pltdata</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">interval</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">draw_fbd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">data_stretch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">),</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">pltdata</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">data_stretch</span><span class="p">:</span>
+            <span class="n">yls</span><span class="p">,</span> <span class="n">yus</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">reskey</span> <span class="ow">in</span> <span class="n">pltdata</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">yls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">reskey</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+                <span class="n">yus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">reskey</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="n">yl</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">yls</span><span class="p">)</span>
+            <span class="n">yu</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">yus</span><span class="p">)</span>
+            <span class="n">xl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">reskey</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">xu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">reskey</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="n">yl</span><span class="p">,</span> <span class="n">yu</span><span class="p">))</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="n">xl</span><span class="p">,</span> <span class="n">xu</span><span class="p">))</span>
+
+        <span class="c1"># axis setup</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xmin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ymin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymax</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+        <span class="n">n_frames</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span>
+        <span class="p">)</span>
+        <span class="c1"># Initialize objects</span>
+        <span class="n">cart</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_draw_objs</span><span class="p">()</span>
+        <span class="c1"># Line for external force</span>
+        <span class="n">ext_force</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+        <span class="c1"># Line for control force</span>
+        <span class="n">ctrl_force</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">draw_fbd</span><span class="p">:</span>
+            <span class="n">pRx_f</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">pRy_f</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">pG_f</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">cRx_f</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">cRy_f</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">cG_f</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">cN_f</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">FancyArrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">fbd_draws</span> <span class="o">=</span> <span class="p">(</span><span class="n">pRx_f</span><span class="p">,</span> <span class="n">pRy_f</span><span class="p">,</span> <span class="n">pG_f</span><span class="p">,</span> <span class="n">cRx_f</span><span class="p">,</span> <span class="n">cRy_f</span><span class="p">,</span> <span class="n">cG_f</span><span class="p">,</span> <span class="n">cN_f</span><span class="p">)</span>
+
+        <span class="n">ground</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="o">-</span><span class="mi">2000</span><span class="p">),</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">)</span>
+        <span class="c1"># ground</span>
+        <span class="n">ground</span><span class="o">.</span><span class="n">set_zorder</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Time text</span>
+        <span class="n">time_text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">Annotation</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> <span class="n">xycoords</span><span class="o">=</span><span class="s2">&quot;axes points&quot;</span><span class="p">)</span>
+
+        <span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">attrs</span> <span class="ow">in</span> <span class="n">pltdata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;line&quot;</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">plot</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                    <span class="p">[],</span>
+                    <span class="p">[],</span>
+                    <span class="n">label</span><span class="o">=</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">],</span>
+                    <span class="n">linestyle</span><span class="o">=</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;linestyle&quot;</span><span class="p">],</span>
+                    <span class="n">color</span><span class="o">=</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+                <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;scatter&quot;</span><span class="p">:</span>
+                <span class="n">plot</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                    <span class="p">[],</span> <span class="p">[],</span> <span class="n">label</span><span class="o">=</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">edgecolors</span><span class="o">=</span><span class="kc">None</span>
+                <span class="p">)</span>
+                <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong type or no type given.&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_init</span><span class="p">():</span>
+            <span class="n">plist</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">cart</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ext_force</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ctrl_force</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ground</span><span class="p">)</span>
+            <span class="n">ax0</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">time_text</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">draw_fbd</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">fbd</span> <span class="ow">in</span> <span class="n">fbd_draws</span><span class="p">:</span>
+                    <span class="n">ax0</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">fbd</span><span class="p">)</span>
+                <span class="n">plist</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">fbd_draws</span><span class="p">)</span>
+            <span class="n">plist</span> <span class="o">=</span> <span class="p">[</span><span class="n">ground</span><span class="p">,</span> <span class="n">cart</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">ext_force</span><span class="p">,</span> <span class="n">ctrl_force</span><span class="p">,</span> <span class="n">time_text</span><span class="p">]</span>
+            <span class="n">plist</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">plots</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">plist</span>
+
+        <span class="k">def</span> <span class="nf">_animate</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="n">retobjs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># limits for y-axis</span>
+
+            <span class="k">if</span> <span class="n">pltdata</span><span class="p">:</span>
+                <span class="n">scyall</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">attrs</span><span class="p">),</span> <span class="n">sc</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pltdata</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">plots</span><span class="p">):</span>
+                    <span class="n">l</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;plotpoints&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="n">scx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">l</span><span class="p">:</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">scy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">l</span><span class="p">:</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;scatter&quot;</span><span class="p">:</span>
+                        <span class="n">sc</span><span class="o">.</span><span class="n">set_offsets</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">scx</span><span class="p">,</span> <span class="n">scy</span><span class="p">]))</span>
+                    <span class="k">elif</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;line&quot;</span><span class="p">:</span>
+                        <span class="n">sc</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">scx</span><span class="p">,</span> <span class="n">scy</span><span class="p">)</span>
+                    <span class="n">scyall</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">scy</span><span class="p">))</span>
+                <span class="n">retobjs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">plots</span><span class="p">)</span>
+                <span class="n">yl</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">scyall</span><span class="p">))</span>
+                <span class="n">yu</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">scyall</span><span class="p">))</span>
+                <span class="n">xl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span>
+                    <span class="nb">max</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="nb">max</span><span class="p">([</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;plotpoints&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pltdata</span><span class="o">.</span><span class="n">values</span><span class="p">()]),</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="p">]</span>
+                <span class="n">xu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-5</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">data_stretch</span><span class="p">:</span>
+                    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="n">yl</span><span class="p">,</span> <span class="n">yu</span><span class="p">))</span>
+                    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="n">xl</span><span class="p">,</span> <span class="n">xu</span><span class="p">))</span>
+                <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1"># draw cart</span>
+            <span class="n">state_xi</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">state_ti</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_draw_cart</span><span class="p">(</span><span class="n">cart</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">state_xi</span><span class="p">,</span> <span class="n">state_ti</span><span class="p">)</span>
+            <span class="c1"># external force</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">draw_force</span><span class="p">(</span>
+                <span class="n">ext_force</span><span class="p">,</span>
+                <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;forces&quot;</span><span class="p">,</span> <span class="s2">&quot;forces&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">state_xi</span><span class="p">,</span>
+                <span class="mf">0.6</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">draw_force</span><span class="p">(</span>
+                <span class="n">ctrl_force</span><span class="p">,</span>
+                <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;control action&quot;</span><span class="p">,</span> <span class="s2">&quot;control action&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">state_xi</span><span class="p">,</span>
+                <span class="mf">0.5</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">time_text</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;t=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+
+            <span class="c1"># fbds</span>
+            <span class="k">if</span> <span class="n">draw_fbd</span><span class="p">:</span>
+                <span class="c1"># pend x</span>
+                <span class="n">px</span> <span class="o">=</span> <span class="n">state_xi</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">state_ti</span><span class="p">)</span>
+                <span class="c1"># pend y</span>
+                <span class="n">py</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pend</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">state_ti</span><span class="p">)</span>
+                <span class="c1"># draw reaction force (pendulum)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_pend_fbd</span><span class="p">(</span>
+                    <span class="n">pRx_f</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;forces&quot;</span><span class="p">,</span> <span class="s2">&quot;pRx&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">]),</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_pend_fbd</span><span class="p">(</span>
+                    <span class="n">pRy_f</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;forces&quot;</span><span class="p">,</span> <span class="s2">&quot;pRy&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">]),</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_pend_fbd</span><span class="p">(</span>
+                    <span class="n">pG_f</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;forces&quot;</span><span class="p">,</span> <span class="s2">&quot;pG&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">]),</span>
+                <span class="p">)</span>
+                <span class="n">retobjs</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">pRx_f</span><span class="p">,</span> <span class="n">pRy_f</span><span class="p">,</span> <span class="n">pG_f</span><span class="p">))</span>
+                <span class="c1"># draw reaction force (cart)</span>
+                <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">state_xi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cart_h</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_cart_fbd</span><span class="p">(</span>
+                    <span class="n">cRx_f</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;forces&quot;</span><span class="p">,</span> <span class="s2">&quot;cRx&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">]),</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_cart_fbd</span><span class="p">(</span>
+                    <span class="n">cRy_f</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;forces&quot;</span><span class="p">,</span> <span class="s2">&quot;cRy&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">]),</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_cart_fbd</span><span class="p">(</span>
+                    <span class="n">cG_f</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;forces&quot;</span><span class="p">,</span> <span class="s2">&quot;cG&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">]),</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_cart_fbd</span><span class="p">(</span>
+                    <span class="n">cN_f</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[(</span><span class="s2">&quot;forces&quot;</span><span class="p">,</span> <span class="s2">&quot;cN&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">]),</span>
+                <span class="p">)</span>
+
+                <span class="n">retobjs</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">cRx_f</span><span class="p">,</span> <span class="n">cRy_f</span><span class="p">,</span> <span class="n">cG_f</span><span class="p">,</span> <span class="n">cN_f</span><span class="p">))</span>
+
+            <span class="n">retobjs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">ground</span><span class="p">,</span> <span class="n">cart</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">ext_force</span><span class="p">,</span> <span class="n">ctrl_force</span><span class="p">,</span> <span class="n">time_text</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">retobjs</span>
+
+        <span class="k">return</span> <span class="n">FuncAnimation</span><span class="p">(</span>
+            <span class="n">fig</span><span class="p">,</span>
+            <span class="n">_animate</span><span class="p">,</span>
+            <span class="n">frames</span><span class="o">=</span><span class="n">n_frames</span><span class="p">,</span>
+            <span class="n">init_func</span><span class="o">=</span><span class="n">_init</span><span class="p">,</span>
+            <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">draw_cart_fbd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">direc</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="n">direc</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">*</span> <span class="n">direc</span>
+        <span class="c1"># initial position plus offset for cart radius</span>
+        <span class="n">offsetbeg</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="c1"># set beginning/end</span>
+        <span class="n">beg</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">offsetbeg</span><span class="p">,</span> <span class="n">offsetbeg</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_width</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="o">*</span> <span class="n">direc</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_xy</span><span class="p">((</span><span class="n">beg</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">draw_pend_fbd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">direc</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="n">direc</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">*</span> <span class="n">direc</span>
+        <span class="c1"># its initial position plus offset for pend radius</span>
+        <span class="n">offsetbeg</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">direc</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_rad</span>
+        <span class="c1"># set beginning / end</span>
+        <span class="n">beg</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">offsetbeg</span><span class="p">,</span> <span class="n">offsetbeg</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_width</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="o">*</span> <span class="n">direc</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_xy</span><span class="p">((</span><span class="n">beg</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Mike Sutherland.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
